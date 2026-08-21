@@ -1,0 +1,32 @@
+https://console.cloud.google.com/apis/api/youtube.googleapis.com/metrics?project=acquired-voice-504815-e0
+https://developers.google.com/youtube/v3/docs/videos/list?apix_params=%7B%22part%22%3A%5B%22snippet%2CcontentDetails%2Cstatistics%22%5D%2C%22chart%22%3A%22mostPopular%22%2C%22maxResults%22%3A50%2C%22regionCode%22%3A%22US%22%2C%22videoCategoryId%22%3A%220%22%7D
+https://console.cloud.google.com/apis/library/youtube.googleapis.com?project=acquired-voice-504815-e0
+https://console.cloud.google.com/apis/library?project=acquired-voice-504815-e0
+
+feed.jsx
+
+<div className="feed">
+      {data.map((items, index) => {
+        return (
+          <Link
+            to={`video/${items.snippet.categoryId}/${items.id}`}
+            className="card"
+          >
+            <img src={items.snippet.thumbnails.medium.url} alt="" />
+            <h2>{items.snippet.title}</h2>
+            <h3>{items.snippet.channelTitle}</h3>
+            <p>
+              {value_converter(items.statistics.viewCount)} views &bull;{" "}
+              {moment(items.snippet.publishedAt).fromNow()}
+            </p>
+          </Link>
+        );
+      })}
+    </div>
+
+sidebar.jsx
+
+<div
+          className={`side-link ${category === 0 ? "active" : ""}`} //Category From API
+          onClick={() => setCategory(0)}
+        >
