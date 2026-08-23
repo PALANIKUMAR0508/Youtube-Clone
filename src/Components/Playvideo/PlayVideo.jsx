@@ -26,16 +26,17 @@ const PlayVideo = ({ videoId }) => {
 
   const fetchOtherData = async () => {
     //Fetching channel data
+    if (!apiData) return;
     const channelData_url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${apiData.snippet.channelId}&key=${API_KEY}`;
     await fetch(channelData_url)
       .then((res) => res.json())
       .then((data) => setChannelData(data.items[0]));
 
     //Fetching Comment Data
-    const Comment_url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&videoId=${videoId}&key=${API_KEY}`;
+    const Comment_url = `https://youtube.googleapis.com/youtube/v3/commentThreads?part=snippet%2Creplies&maxResults=50&videoId=${videoId}&key=${API_KEY}`;
     await fetch(Comment_url)
       .then((res) => res.json())
-      .then((data) => setCommentData(data.items||[]));
+      .then((data) => setCommentData(data.items || []));
   };
   useEffect(() => {
     fetchVideoData();
@@ -83,10 +84,13 @@ const PlayVideo = ({ videoId }) => {
         </div>
         <hr />
         <div className="publisher">
-          <img
+          {/* <img
             src={channelData ? channelData.snippet.thumbnails.default.url : ""}
             alt=""
-          />
+          /> */}
+          {channelData?.snippet?.thumbnails?.default?.url && (
+            <img src={channelData.snippet.thumbnails.default.url} alt="" />
+          )}
           <div>
             <p>{apiData ? apiData.snippet.channelTitle : ""}</p>
             <span>
@@ -120,16 +124,21 @@ const PlayVideo = ({ videoId }) => {
               />
               <div>
                 <h3>
-                  Jack Nicholson<span>1 day ago</span>
+                  {item.snippet.topLevelComment.snippet.authorDisplayName}
+                  <span>
+                    {moment(
+                      item.snippet.topLevelComment.snippet.publishedAt,
+                    ).fromNow()}
+                  </span>
                 </h3>
-                <p>
-                  A global computer network providing a varity of information
-                  and computer network of interconnected networks using
-                  standardized communication protocols.
-                </p>
+                <p>{item.snippet.topLevelComment.snippet.textDisplay}</p>
                 <div className="comment-action">
                   <img src={like} alt="" />
-                  <span>244</span>
+                  <span>
+                    {value_converter(
+                      item.snippet.topLevelComment.snippet.likeCount,
+                    )}
+                  </span>
                   <img src={dislike} alt="" />
                 </div>
               </div>

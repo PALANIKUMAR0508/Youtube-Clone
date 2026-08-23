@@ -30,6 +30,7 @@ const Feed = ({ category }) => {
       {data.map((items, index) => {
         return (
           <Link
+            key={items.id}
             to={`video/${items.snippet.categoryId}/${items.id}`}
             className="card"
           >
