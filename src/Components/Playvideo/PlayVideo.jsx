@@ -12,7 +12,7 @@ import { API_KEY, value_converter } from "../../data";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
-const PlayVideo = ({ videoId }) => {
+const PlayVideo = () => {
   const { videoId } = useParams();
 
   const [apiData, setApiData] = useState(null);
