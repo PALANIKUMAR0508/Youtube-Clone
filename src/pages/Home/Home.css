@@ -6,6 +6,14 @@
   padding-bottom: 20px;
 }
 
-.large-container{
-    padding-left: 7%;
+.large-container {
+  padding-left: 7%;
+}
+
+@media (max-width: 900px) {
+  .container,
+  .large-container {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 }
