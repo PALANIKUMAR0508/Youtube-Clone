@@ -10,8 +10,11 @@ import user_profile from "../../assets/user_profile.jpg";
 import videoId from "../../pages/Videos/Video";
 import { API_KEY, value_converter } from "../../data";
 import moment from "moment";
+import { useParams } from "react-router-dom";
 
 const PlayVideo = ({ videoId }) => {
+  const { videoId } = useParams();
+
   const [apiData, setApiData] = useState(null);
   const [channelData, setChannelData] = useState(null);
   const [commentData, setCommentData] = useState([]);
@@ -40,7 +43,7 @@ const PlayVideo = ({ videoId }) => {
   };
   useEffect(() => {
     fetchVideoData();
-  }, []);
+  }, [videoId]);
 
   useEffect(() => {
     fetchOtherData();
